@@ -4,11 +4,10 @@ import WhatsAppIcon from './WhatsAppIcon';
 
 export default function FloatingWhatsApp() {
   return (
-    <div className="group fixed bottom-5 right-5 z-40 flex items-center gap-3 sm:bottom-6 sm:right-6">
-      {/* Tooltip suave no desktop */}
+    <div className="group fixed bottom-5 right-5 z-50 flex items-center gap-3">
       <span
         aria-hidden="true"
-        className="pointer-events-none hidden translate-x-2 rounded-full border border-gold/25 bg-navy/95 px-4 py-2 text-xs font-medium text-paper opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 md:inline-block"
+        className="pointer-events-none hidden translate-x-2 rounded-full border border-white/15 bg-navy/95 px-4 py-2 text-xs font-medium text-white opacity-0 shadow-lg backdrop-blur-md transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 md:inline-block"
       >
         Falar no WhatsApp
       </span>
@@ -20,9 +19,14 @@ export default function FloatingWhatsApp() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Falar com o Dr. Adriano no WhatsApp"
-        className="flex h-13 w-13 items-center justify-center rounded-full bg-whatsapp p-3.5 text-white shadow-lg shadow-black/25 transition-all duration-300 hover:scale-105 hover:bg-whatsapp-hover focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-navy sm:h-14 sm:w-14"
+        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-white shadow-xl shadow-black/25 transition-transform duration-300 hover:scale-105 hover:bg-whatsapp-hover focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-paper"
       >
-        <WhatsAppIcon className="h-6 w-6 sm:h-7 sm:w-7" />
+        {/* Anel de pulso sutil */}
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 rounded-full bg-whatsapp opacity-35 animate-ping [animation-duration:2.8s]"
+        />
+        <WhatsAppIcon className="relative z-10 h-7 w-7" />
       </a>
     </div>
   );

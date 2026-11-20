@@ -5,21 +5,22 @@ export default {
     extend: {
       colors: {
         navy: {
-          DEFAULT: '#0F1D2B',
-          light: '#162738',
-          deep: '#0A141E',
+          DEFAULT: '#0D1B2A',
+          light: '#19324B',
+          deep: '#09131E',
         },
         gold: {
-          DEFAULT: '#C8A253',
-          hover: '#D8B56A',
+          DEFAULT: '#D4AF5A',
+          hover: '#E2C170',
           muted: '#9A7C3E',
         },
         paper: {
-          DEFAULT: '#F7F6F2',
-          elevated: '#FDFCF9',
+          DEFAULT: '#F4F3EF',
+          card: '#F7F6F2',
+          elevated: '#FFFFFF',
         },
         ink: {
-          DEFAULT: '#23303D',
+          DEFAULT: '#0D1B2A',
           muted: '#52606D',
         },
         whatsapp: {
@@ -32,9 +33,10 @@ export default {
         sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
       },
       boxShadow: {
-        editorial: '0 24px 60px -18px rgba(15, 29, 43, 0.14)',
-        'editorial-dark': '0 30px 70px -20px rgba(4, 9, 15, 0.65)',
-        'gold-glow': '0 14px 34px -10px rgba(200, 162, 83, 0.4)',
+        sculpted:
+          '0 32px 80px -24px rgba(9, 19, 30, 0.42), 0 12px 32px -12px rgba(9, 19, 30, 0.24)',
+        editorial: '0 24px 60px -18px rgba(13, 27, 42, 0.12)',
+        'gold-glow': '0 14px 36px -10px rgba(212, 175, 90, 0.42)',
       },
     },
   },

@@ -1,6 +1,6 @@
 // ============================================================================
 // CONFIGURAÇÃO CENTRALIZADA DO SITE — ASP (ADRIANO DE SOUZA PEREIRA)
-// Qualquer ajuste de telefone, endereço, áreas ou depoimento é feito aqui.
+// Qualquer ajuste de telefone, endereço, áreas ou mensagens é feito aqui.
 // ============================================================================
 
 export const siteConfig = {
@@ -11,7 +11,7 @@ export const siteConfig = {
     displayTitle: 'Dr. Adriano de Souza Pereira',
     subtitle: 'Consultoria e Assessoria Jurídica',
     oab: 'OAB/MG 141.920',
-    locationBadge: 'OAB/MG 141.920 • ATENDIMENTO EM NOVA LIMA E REGIÃO',
+    heroBadge: 'OAB/MG 141.920 • NOVA LIMA – MG',
   },
 
   contact: {
@@ -29,155 +29,220 @@ export const siteConfig = {
       full: 'Rua Bias Fortes, 54 – Sala 3, Centro, Nova Lima – MG | CEP 34.000-168',
       mapsUrl:
         'https://www.google.com/maps/search/?api=1&query=Rua+Bias+Fortes,+54+-+Sala+3,+Centro,+Nova+Lima+-+MG,+34000-168',
+      mapsEmbedUrl:
+        'https://maps.google.com/maps?q=Rua%20Bias%20Fortes%2054,%20Centro,%20Nova%20Lima%20-%20MG&t=&z=16&ie=UTF8&iwloc=&output=embed',
     },
   },
 
   defaultWhatsAppMessages: {
     navbar:
       'Olá, Dr. Adriano! Vim pelo site e gostaria de conversar sobre uma orientação jurídica.',
-    hero: 'Olá, Dr. Adriano! Vim pelo site e gostaria de agendar um atendimento para falar sobre a minha situação.',
+    hero: 'Olá, Dr. Adriano! Vim pelo site e gostaria de iniciar um atendimento para falar sobre a minha situação.',
+    sobre:
+      'Olá, Dr. Adriano! Li sobre a forma como o senhor trabalha e gostaria de agendar uma conversa.',
+    indice:
+      'Olá, Dr. Adriano! Vim pelo site e gostaria de tirar uma dúvida jurídica com o senhor.',
     float:
       'Olá, Dr. Adriano! Vim pelo site e gostaria de falar com o senhor pelo WhatsApp.',
   },
 
   navLinks: [
-    { label: 'Áreas de Atuação', href: '#areas' },
-    { label: 'Como Trabalho', href: '#como-trabalho' },
+    { label: 'Sobre', href: '#sobre' },
+    { label: 'Especialidades', href: '#especialidades' },
+    { label: 'Demandas', href: '#demandas' },
     { label: 'Contato', href: '#contato' },
   ],
 
   hero: {
-    photoPath: '/assets/dr-adriano.jpg',
+    photoPath: '/assets/dr-adriano.png',
     photoAlt: 'Dr. Adriano de Souza Pereira — Advogado em Nova Lima, MG',
-    headline:
-      'Segurança jurídica para o seu patrimônio e tranquilidade para a sua família.',
-    subtext:
-      'Regularização fundiária, direito imobiliário, família e juizado especial em Nova Lima. Atendimento direto comigo, com escuta atenta, linguagem clara e foco em resolver o que tira a sua paz.',
-    ctaLabel: 'Conversar com o Dr. Adriano no WhatsApp',
-    microGuarantee:
-      'Atendimento presencial no Centro de Nova Lima ou online • Sigilo absoluto',
-    photoCaptionSub: 'OAB/MG 141.920 • Atendimento direto e humanizado',
+    microNote: 'Atendimento presencial no Centro de Nova Lima ou online.',
+    glassTitle: 'Atendimento Direto',
+    glassText:
+      'Regularização fundiária, direito imobiliário, família e juizado especial conduzidos com escuta humana e clareza técnica.',
+    ctaLabel: 'Iniciar atendimento',
   },
 
-  practiceAreas: [
+  authorityBar: [
     {
-      id: 'imobiliario',
-      tabLabel: 'Imobiliário & Regularização Fundiária',
-      shortTabLabel: 'Imobiliário & Regularização',
-      title: 'Proteja o patrimônio que você construiu.',
-      description:
-        'Um imóvel ou terreno carrega anos de esforço e história — ele não pode ficar desprotegido no papel. Atuamos para tirar sua propriedade da informalidade e defender a sua posse com clareza e firmeza técnica.',
-      tags: [
-        'Regularização Fundiária',
-        'Usucapião',
-        'Reintegração de Posse',
-        'Consultoria Imobiliária',
-      ],
-      ctaId: 'cta-aba-imobiliario',
-      ctaOrigin: 'aba-imobiliario',
-      ctaLabel: 'Quero orientar a situação do meu imóvel',
-      whatsappMessage:
-        'Olá, Dr. Adriano! Vim pelo site e preciso de orientação sobre direito imobiliário / regularização fundiária.',
+      id: 'oab',
+      icon: 'Scale',
+      title: 'OAB/MG 141.920',
+      subtitle: 'Registro regular e ativo',
     },
     {
-      id: 'familia',
-      tabLabel: 'Direito de Família',
-      shortTabLabel: 'Direito de Família',
-      title: 'Cuidado e firmeza nos momentos mais delicados.',
-      description:
-        'Questões dentro de casa mexem com a base da nossa vida. Conduzimos cada atendimento com respeito, sigilo e foco em proteger os direitos e o bem-estar de quem você ama.',
-      tags: [
-        'Divórcio',
-        'Guarda',
-        'Pensão Alimentícia',
-        'Cobrança de Alimentos',
-      ],
-      ctaId: 'cta-aba-familia',
-      ctaOrigin: 'aba-familia',
-      ctaLabel: 'Preciso de orientação em Direito de Família',
-      whatsappMessage:
-        'Olá, Dr. Adriano! Vim pelo site e preciso de orientação em Direito de Família.',
-    },
-    {
-      id: 'juizado',
-      tabLabel: 'Juizado Especial',
-      shortTabLabel: 'Juizado Especial',
-      title: 'Soluções objetivas para conflitos do dia a dia.',
-      description:
-        'Cobranças indevidas, contratos descumpridos ou problemas de consumo não precisam se arrastar tirando o seu sossego. Analisamos o seu cenário e orientamos o caminho jurídico mais direto.',
-      tags: [
-        'Causas Cíveis',
-        'Relações de Consumo',
-        'Defesa e Acompanhamento',
-      ],
-      ctaId: 'cta-aba-juizado',
-      ctaOrigin: 'aba-juizado',
-      ctaLabel: 'Quero tirar uma dúvida sobre minha causa',
-      whatsappMessage:
-        'Olá, Dr. Adriano! Vim pelo site e gostaria de tirar uma dúvida sobre Juizado Especial.',
-    },
-  ],
-
-  pillars: [
-    {
-      id: 'atendimento-direto',
-      title: 'Atendimento Direto',
-      description:
-        'Você conversa diretamente com o Dr. Adriano, sem robôs ou intermediários.',
-      icon: 'UserCheck',
-    },
-    {
-      id: 'escritorio-nova-lima',
-      title: 'Escritório no Centro de Nova Lima',
-      description:
-        'Estrutura presencial de fácil acesso na Rua Bias Fortes, além de atendimento online.',
+      id: 'location',
       icon: 'MapPin',
+      title: 'Centro de Nova Lima',
+      subtitle: 'Rua Bias Fortes, 54 – Sala 3',
     },
     {
-      id: 'etica-e-sigilo',
-      title: 'Ética e Sigilo',
-      description:
-        'Atuação responsável, transparente e devidamente registrada na OAB/MG 141.920.',
+      id: 'direct',
+      icon: 'UserCheck',
+      title: 'Atendimento Direto',
+      subtitle: 'Sem robôs ou intermediários',
+    },
+    {
+      id: 'secrecy',
       icon: 'ShieldCheck',
+      title: 'Sigilo Absoluto',
+      subtitle: 'Ética e transparência total',
     },
   ],
 
-  // Depoimento configurável para aprovação final do cliente
-  testimonial: {
-    quote:
-      'Eu não fazia ideia de por onde começar para regularizar o imóvel da nossa família. O Dr. Adriano ouviu tudo com calma, explicou cada etapa sem termos complicados e trouxe a tranquilidade que faltava para resolvermos a situação.',
-    author: 'Cliente atendido em Nova Lima – MG',
+  about: {
+    eyebrow: 'SOBRE O ESCRITÓRIO',
+    title: 'Construído na escuta, movido pela segurança.',
+    lead: 'Viver com um imóvel sem escritura, enfrentar uma disputa de posse ou atravessar um momento delicado em família gera uma angústia silenciosa que pesa todos os dias.',
+    body: 'Na ASP – Adriano de Souza Pereira – Consultoria e Assessoria Jurídica, o trabalho começa antes dos autos. Eu escuto a sua história com calma, traduzo cada etapa jurídica sem termos difíceis e atuo com firmeza para devolver o chão seguro que você e sua família precisam para seguir em frente.',
+    ctaLabel: 'Agendar conversa no WhatsApp',
   },
 
-  painPoints: [
+  specialties: [
     {
-      id: 'cta-rodape-imobiliario',
-      origin: 'rodape-imobiliario',
-      title: 'Regularização de imóvel, Usucapião ou Posse',
-      subtitle: 'Escritura, matrícula, usucapião ou defesa patrimonial',
+      id: 'cta-card-fundiaria',
+      origin: 'card-fundiaria',
+      category: 'IMOBILIÁRIO',
+      title: 'Regularização Fundiária',
+      description:
+        'Tire seu imóvel ou terreno da informalidade com segurança documental e proteção patrimonial.',
+      image:
+        'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=900&q=80',
+      imageAlt: 'Arquitetura residencial simbolizando regularização fundiária',
+      variant: 'light',
+      whatsappMessage:
+        'Olá, Dr. Adriano! Vim pelo site e preciso de orientação sobre Regularização Fundiária.',
+    },
+    {
+      id: 'cta-card-usucapiao',
+      origin: 'card-usucapiao',
+      category: 'POSSE & PROPRIEDADE',
+      title: 'Usucapião e Reintegração de Posse',
+      description:
+        'Defesa firme da sua posse e caminhos estruturados para consolidar a propriedade do seu bem.',
+      image:
+        'https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=900&q=80',
+      imageAlt: 'Imóvel e terreno representando usucapião e reintegração de posse',
+      variant: 'dark',
+      whatsappMessage:
+        'Olá, Dr. Adriano! Vim pelo site e preciso de orientação sobre Usucapião ou Reintegração de Posse.',
+    },
+    {
+      id: 'cta-card-familia',
+      origin: 'card-familia',
+      category: 'DIREITO DE FAMÍLIA',
+      title: 'Divórcio, Guarda e Pensão',
+      description:
+        'Condução discreta e humana em divórcios, guarda de filhos, pensão e cobrança de alimentos.',
+      image:
+        'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=900&q=80',
+      imageAlt: 'Família simbolizando atendimento humanizado em Direito de Família',
+      variant: 'light',
+      whatsappMessage:
+        'Olá, Dr. Adriano! Vim pelo site e preciso de orientação em Direito de Família (divórcio, guarda ou pensão).',
+    },
+    {
+      id: 'cta-card-juizado',
+      origin: 'card-juizado',
+      category: 'CÍVEL',
+      title: 'Juizado Especial',
+      description:
+        'Orientação objetiva para cobranças indevidas, contratos e causas cíveis de menor complexidade.',
+      image:
+        'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=900&q=80',
+      imageAlt: 'Livros e símbolos jurídicos representando Juizado Especial Cível',
+      variant: 'dark',
+      whatsappMessage:
+        'Olá, Dr. Adriano! Vim pelo site e preciso de orientação sobre uma causa no Juizado Especial.',
+    },
+  ],
+
+  demands: [
+    {
+      id: 'cta-demanda-regularizacao',
+      origin: 'demanda-regularizacao',
+      title: 'Regularização Fundiária de Imóveis e Terrenos',
+      area: 'Imobiliário',
+      modality: 'Nova Lima & Online',
+      whatsappMessage:
+        'Olá, Dr. Adriano! Vim pelo site e preciso de orientação sobre Regularização Fundiária de imóvel ou terreno.',
+    },
+    {
+      id: 'cta-demanda-usucapiao',
+      origin: 'demanda-usucapiao',
+      title: 'Ação de Usucapião (Judicial e Extrajudicial)',
+      area: 'Imobiliário',
+      modality: 'Nova Lima & Online',
+      whatsappMessage:
+        'Olá, Dr. Adriano! Vim pelo site e gostaria de orientação sobre Ação de Usucapião.',
+    },
+    {
+      id: 'cta-demanda-posse',
+      origin: 'demanda-posse',
+      title: 'Reintegração e Defesa de Posse',
+      area: 'Imobiliário',
+      modality: 'Nova Lima & Online',
+      whatsappMessage:
+        'Olá, Dr. Adriano! Vim pelo site e preciso de orientação sobre Reintegração ou Defesa de Posse.',
+    },
+    {
+      id: 'cta-demanda-divorcio',
+      origin: 'demanda-divorcio',
+      title: 'Divórcio Consensual ou Litigioso',
+      area: 'Família',
+      modality: 'Sigilo Absoluto',
+      whatsappMessage:
+        'Olá, Dr. Adriano! Vim pelo site e preciso de orientação sigilosa sobre Divórcio.',
+    },
+    {
+      id: 'cta-demanda-guarda-pensao',
+      origin: 'demanda-guarda-pensao',
+      title: 'Guarda, Pensão e Cobrança de Alimentos',
+      area: 'Família',
+      modality: 'Sigilo Absoluto',
+      whatsappMessage:
+        'Olá, Dr. Adriano! Vim pelo site e preciso de orientação sobre Guarda, Pensão ou Cobrança de Alimentos.',
+    },
+    {
+      id: 'cta-demanda-juizado',
+      origin: 'demanda-juizado',
+      title: 'Causas no Juizado Especial Cível',
+      area: 'Juizado Especial',
+      modality: 'Orientação Direta',
+      whatsappMessage:
+        'Olá, Dr. Adriano! Vim pelo site e gostaria de orientação sobre uma causa no Juizado Especial Cível.',
+    },
+  ],
+
+  footerPainPoints: [
+    {
+      id: 'cta-footer-imobiliario',
+      origin: 'footer-imobiliario',
+      icon: 'Building2',
+      title: 'Imóvel, Regularização, Usucapião ou Posse',
       whatsappMessage:
         'Olá, Dr. Adriano! Vim pelo site e preciso de orientação sobre regularização fundiária / direito imobiliário.',
     },
     {
-      id: 'cta-rodape-familia',
-      origin: 'rodape-familia',
+      id: 'cta-footer-familia',
+      origin: 'footer-familia',
+      icon: 'Users',
       title: 'Divórcio, Guarda, Pensão ou Alimentos',
-      subtitle: 'Atendimento sigiloso e humanizado para sua família',
       whatsappMessage:
         'Olá, Dr. Adriano! Vim pelo site e preciso de orientação em Direito de Família.',
     },
     {
-      id: 'cta-rodape-juizado',
-      origin: 'rodape-juizado',
-      title: 'Juizado Especial ou outra dúvida jurídica',
-      subtitle: 'Causas cíveis, consumo, contratos ou análise de cenário',
+      id: 'cta-footer-juizado',
+      origin: 'footer-juizado',
+      icon: 'Scale',
+      title: 'Juizado Especial ou Outra Dúvida',
       whatsappMessage:
-        'Olá, Dr. Adriano! Vim pelo site e gostaria de agendar uma conversa sobre uma questão jurídica.',
+        'Olá, Dr. Adriano! Vim pelo site e gostaria de agendar uma conversa sobre Juizado Especial ou outra dúvida jurídica.',
     },
   ],
 
   legalNotice:
-    'Este site tem caráter exclusivamente informativo e institucional, em conformidade com o Código de Ética e Disciplina da OAB. A análise jurídica, viabilidade, prazos e honorários de cada caso são tratados somente mediante atendimento individualizado.',
+    'Este site possui caráter exclusivamente informativo e institucional, em conformidade com o Código de Ética e Disciplina da OAB. A análise jurídica, viabilidade, prazos e honorários de cada caso são tratados exclusivamente mediante atendimento individualizado.',
 };
 
 /**

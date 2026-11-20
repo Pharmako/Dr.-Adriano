@@ -1,10 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { ShieldCheck } from 'lucide-react';
+import { MapPin, Scale, ShieldCheck, UserCheck } from 'lucide-react';
 import { siteConfig, getWhatsAppUrl } from '../config/siteConfig';
+import Navbar from './Navbar';
 import GreekColumnIcon from './GreekColumnIcon';
-import WhatsAppIcon from './WhatsAppIcon';
-import MagneticButton from './MagneticButton';
+import PillCTA from './PillCTA';
+
+const authorityIcons = {
+  Scale,
+  MapPin,
+  UserCheck,
+  ShieldCheck,
+};
 
 export default function Hero() {
   const sectionRef = useRef(null);
@@ -17,24 +24,32 @@ export default function Hero() {
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-      gsap.from('.hero-stagger', {
-        opacity: 0,
-        y: 24,
-        duration: 0.85,
-        stagger: 0.11,
-        ease: 'power3.out',
-        clearProps: 'transform',
-      });
+      gsap.fromTo(
+        '.hero-reveal',
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.75,
+          stagger: 0.09,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+        }
+      );
 
-      gsap.from('.hero-photo-card', {
-        opacity: 0,
-        y: 28,
-        scale: 0.97,
-        duration: 1,
-        delay: 0.2,
-        ease: 'power3.out',
-        clearProps: 'transform',
-      });
+      gsap.fromTo(
+        '.hero-portrait',
+        { opacity: 0, y: 26, scale: 0.97 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.9,
+          delay: 0.12,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+        }
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -46,70 +61,72 @@ export default function Hero() {
     <section
       id="topo"
       ref={sectionRef}
-      className="relative flex min-h-[90vh] items-center overflow-hidden bg-navy py-14 sm:py-20 lg:py-24"
+      className="sculpted-dark mx-2.5 mt-3 rounded-[24px] shadow-sculpted ring-1 ring-white/10 sm:mx-5 sm:mt-4 sm:rounded-[28px] lg:mx-8 lg:rounded-[36px]"
     >
       {/* Textura editorial sutil */}
       <div className="noise-overlay" aria-hidden="true" />
 
-      {/* Gradiente radial sutil */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_22%_35%,rgba(200,162,83,0.12)_0%,rgba(22,39,56,0.35)_42%,rgba(15,29,43,0)_76%)]"
-      />
+      {/* Navbar Interna Flutuante */}
+      <Navbar />
 
-      {/* Marca d'água geométrica da coluna clássica em opacity-[0.04] */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-24 top-1/2 -translate-y-1/2 text-gold opacity-[0.04]"
-      >
-        <GreekColumnIcon className="h-[520px] w-[520px] sm:h-[640px] sm:w-[640px]" />
-      </div>
-
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Grid 2 colunas desktop (60% esquerda / 40% direita) */}
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-12 xl:gap-16">
-          {/* Coluna Esquerda (60% -> 7/12): Texto e Conversão */}
-          <div className="lg:col-span-7">
-            <div className="hero-stagger mb-6 inline-flex items-center gap-2.5 rounded-full border border-gold/30 bg-navy-light/70 px-4 py-1.5 backdrop-blur-sm">
-              <span
-                className="h-1.5 w-1.5 rounded-full bg-gold"
-                aria-hidden="true"
-              />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-gold sm:text-xs">
-                {siteConfig.brand.locationBadge}
+      {/* Palco Principal da Hero */}
+      <div className="relative z-10 mx-auto max-w-7xl px-5 pb-0 pt-8 sm:px-6 lg:px-12 lg:pt-10">
+        <div className="grid grid-cols-1 items-end gap-8 lg:grid-cols-12 lg:gap-6">
+          {/* Coluna Esquerda (5 cols): Badge + H1 Monumental + Micro-texto */}
+          <div className="pb-2 lg:col-span-5 lg:pb-12">
+            <div className="hero-reveal inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 backdrop-blur-md">
+              <span className="relative flex h-2 w-2" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
+              </span>
+              <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-gold">
+                {siteConfig.brand.heroBadge}
               </span>
             </div>
 
-            <h1 className="hero-stagger font-serif text-4xl font-semibold leading-[1.12] tracking-[-0.015em] text-paper sm:text-5xl lg:text-[3.45rem] xl:text-[3.75rem]">
-              {siteConfig.hero.headline}
+            <h1 className="hero-reveal mt-6 font-serif text-4xl font-semibold leading-[1.06] tracking-[-0.02em] text-white sm:text-5xl lg:text-[3.5rem]">
+              Segurança jurídica para o seu{' '}
+              <em className="font-serif italic text-gold">patrimônio</em> e paz
+              para a sua{' '}
+              <em className="font-serif italic text-gold">família.</em>
             </h1>
 
-            <p className="hero-stagger mt-6 max-w-2xl text-base leading-relaxed text-paper/80 sm:text-lg sm:leading-[1.7]">
-              {siteConfig.hero.subtext}
+            <p className="hero-reveal mt-5 flex items-center gap-2.5 text-sm text-slate-300/85">
+              <ShieldCheck className="h-4 w-4 shrink-0 text-gold" />
+              <span>{siteConfig.hero.microNote}</span>
             </p>
 
-            <div className="hero-stagger mt-9 flex flex-col items-start gap-4">
-              <MagneticButton
-                id="cta-hero"
-                ctaOrigin="hero"
+            {/* CTA imediato no mobile (primeira dobra Google Ads) */}
+            <div className="hero-reveal mt-6 lg:hidden">
+              <PillCTA
+                id="cta-hero-mobile"
+                ctaOrigin="hero-mobile"
                 href={heroWhatsAppUrl}
-                variant="gold"
-                className="w-full px-7 py-4 text-sm sm:w-auto sm:px-8 sm:text-base"
+                fullWidth
               >
-                <WhatsAppIcon className="h-5 w-5 shrink-0" />
-                <span>{siteConfig.hero.ctaLabel}</span>
-              </MagneticButton>
-
-              <p className="flex items-center gap-2 text-xs text-paper/65 sm:text-sm">
-                <ShieldCheck className="h-4 w-4 shrink-0 text-gold/90" />
-                <span>{siteConfig.hero.microGuarantee}</span>
-              </p>
+                {siteConfig.hero.ctaLabel}
+              </PillCTA>
             </div>
           </div>
 
-          {/* Coluna Direita (40% -> 5/12): Card Fotográfico Real */}
-          <div className="lg:col-span-5">
-            <div className="hero-photo-card relative mx-auto aspect-[4/3] w-full max-w-md overflow-hidden rounded-2xl border border-[#C8A253]/30 bg-[#162738] shadow-2xl lg:aspect-[4/5] lg:max-w-none">
+          {/* Coluna Central (4 cols): Protagonismo do Retrato */}
+          <div className="relative flex justify-center lg:col-span-4">
+            {/* Halo radial sutil atrás do retrato */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#254A70]/45 blur-3xl"
+            />
+
+            {/* Marca d'água SVG da coluna clássica */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-6 left-1/2 -translate-x-1/2 text-gold opacity-[0.06]"
+            >
+              <GreekColumnIcon className="h-72 w-72 sm:h-80 sm:w-80" />
+            </div>
+
+            {/* Card fotográfico vertical com arco editorial */}
+            <div className="hero-portrait relative z-10 aspect-[4/5] w-full max-w-[330px] overflow-hidden rounded-b-2xl rounded-t-[130px] border border-[#D4AF5A]/25 bg-navy-deep shadow-2xl sm:max-w-[360px] lg:max-w-none">
               {!imgError ? (
                 <img
                   src={siteConfig.hero.photoPath}
@@ -117,38 +134,76 @@ export default function Hero() {
                   onError={() => setImgError(true)}
                   loading="eager"
                   decoding="async"
-                  className="h-full w-full object-cover object-[50%_58%] scale-[1.15] contrast-[1.04] saturate-[0.94]"
+                  className="h-full w-full object-cover object-top"
                 />
               ) : (
-                /* Fallback elegante caso a imagem ainda não tenha sido inserida */
-                <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-navy-light to-navy p-8 text-center">
+                <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-b from-navy-light to-navy-deep p-8 text-center">
                   <GreekColumnIcon className="mb-4 h-16 w-16 text-gold/70" />
                   <span className="font-serif text-2xl font-semibold tracking-[0.16em] text-gold">
                     {siteConfig.brand.monogram}
                   </span>
-                  <span className="mt-2 text-xs uppercase tracking-[0.2em] text-paper/60">
-                    {siteConfig.brand.oab}
-                  </span>
                 </div>
               )}
 
-              {/* Overlay em gradiente na base */}
+              {/* Gradiente suave apenas na base integrando o paletó ao palco escuro */}
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F1D2B] via-[#0F1D2B]/30 to-transparent"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#09131E] via-[#09131E]/40 to-transparent"
               />
-
-              {/* Selo glassmorphism discreto na parte inferior interna */}
-              <div className="absolute inset-x-4 bottom-4 rounded-xl border border-gold/25 bg-navy/70 px-4 py-3.5 backdrop-blur-md sm:inset-x-5 sm:bottom-5 sm:px-5">
-                <p className="font-serif text-base font-semibold text-paper sm:text-lg">
-                  {siteConfig.brand.displayTitle}
-                </p>
-                <p className="mt-0.5 text-xs text-gold/90 sm:text-[13px]">
-                  {siteConfig.hero.photoCaptionSub}
-                </p>
-              </div>
             </div>
           </div>
+
+          {/* Coluna Direita (3 cols): Card Glassmorphism + CTA Principal */}
+          <div className="hero-reveal flex flex-col gap-4 pb-8 lg:col-span-3 lg:pb-12">
+            <div className="space-y-3 rounded-2xl border border-white/15 bg-white/[0.07] p-5 backdrop-blur-xl">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold/15 text-gold">
+                  <Scale className="h-4 w-4" />
+                </span>
+                <span className="text-sm font-semibold tracking-wide text-white">
+                  {siteConfig.hero.glassTitle}
+                </span>
+              </div>
+              <p className="text-sm leading-relaxed text-slate-200">
+                {siteConfig.hero.glassText}
+              </p>
+            </div>
+
+            <div className="hidden lg:block">
+              <PillCTA
+                id="cta-hero"
+                ctaOrigin="hero"
+                href={heroWhatsAppUrl}
+                fullWidth
+              >
+                {siteConfig.hero.ctaLabel}
+              </PillCTA>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Barra Inferior de Autoridade (Ancorada na base interna do container da Hero) */}
+      <div className="relative z-10 border-t border-white/10 bg-black/25 px-5 py-6 sm:px-6 lg:px-12">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 lg:grid-cols-4">
+          {siteConfig.authorityBar.map((item) => {
+            const Icon = authorityIcons[item.icon] || Scale;
+            return (
+              <div key={item.id} className="flex items-start gap-3">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-gold/20 bg-gold/10 text-gold">
+                  <Icon className="h-4 w-4" />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-white sm:text-[15px]">
+                    {item.title}
+                  </p>
+                  <p className="mt-0.5 text-xs text-slate-300/75">
+                    {item.subtitle}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

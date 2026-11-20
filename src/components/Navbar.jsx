@@ -2,21 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { siteConfig, getWhatsAppUrl } from '../config/siteConfig';
 import GreekColumnIcon from './GreekColumnIcon';
-import WhatsAppIcon from './WhatsAppIcon';
-import MagneticButton from './MagneticButton';
+import PillCTA from './PillCTA';
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 24);
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -30,120 +19,100 @@ export default function Navbar() {
   const whatsappHref = getWhatsAppUrl(siteConfig.defaultWhatsAppMessages.navbar);
 
   return (
-    <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        scrolled
-          ? 'bg-navy/90 backdrop-blur-md border-b border-gold/20 shadow-lg shadow-navy-deep/30'
-          : 'bg-navy border-b border-white/[0.06]'
-      }`}
-    >
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Esquerda: Marca ASP + Coluna Clássica */}
+    <header className="relative z-30 mx-auto w-full max-w-7xl px-5 pt-5 sm:px-6 sm:pt-6 lg:px-12">
+      <div className="flex items-center justify-between gap-4">
+        {/* Esquerda: Coluna Clássica + ASP + Adriano Souza Pereira */}
         <a
           href="#topo"
           className="group flex items-center gap-3 focus:outline-none"
-          aria-label="ASP – Adriano de Souza Pereira – Voltar ao topo"
+          aria-label="ASP – Adriano de Souza Pereira – Início"
         >
-          <GreekColumnIcon className="h-9 w-9 shrink-0 text-gold transition-transform duration-300 group-hover:scale-105" />
-          <div className="flex items-center gap-3">
-            <span className="font-serif text-xl font-semibold tracking-[0.14em] text-paper sm:text-2xl">
+          <GreekColumnIcon className="h-8 w-8 shrink-0 text-gold transition-transform duration-300 group-hover:scale-105 sm:h-9 sm:w-9" />
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <span className="font-serif text-lg font-semibold tracking-[0.14em] text-white sm:text-xl">
               {siteConfig.brand.monogram}
             </span>
             <span
-              className="hidden h-7 w-px bg-gold/35 sm:block"
+              className="hidden h-6 w-px bg-gold/35 sm:block"
               aria-hidden="true"
             />
-            <div className="hidden flex-col leading-tight sm:flex">
-              <span className="text-sm font-semibold tracking-wide text-paper">
-                {siteConfig.brand.shortName}
-              </span>
-              <span className="text-xs text-paper/65">
-                {siteConfig.brand.subtitle}
-              </span>
-            </div>
+            <span className="hidden text-xs font-medium tracking-wide text-slate-200/90 sm:block lg:text-sm">
+              {siteConfig.brand.shortName}
+            </span>
           </div>
         </a>
 
-        {/* Centro (Desktop): Links Âncora */}
+        {/* Centro (Desktop): Pílula translúcida flutuante */}
         <nav
           aria-label="Navegação principal"
-          className="hidden items-center gap-8 lg:flex"
+          className="hidden items-center gap-7 rounded-full border border-white/10 bg-white/[0.08] px-6 py-2.5 backdrop-blur-md lg:flex"
         >
           {siteConfig.navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="relative text-sm font-medium text-paper/80 transition-colors duration-200 hover:text-gold after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-gold after:transition-all after:duration-300 hover:after:w-full"
+              className="text-sm font-medium text-slate-200/90 transition-colors duration-200 hover:text-gold"
             >
               {link.label}
             </a>
           ))}
         </nav>
 
-        {/* Direita: CTA WhatsApp + Menu Mobile */}
-        <div className="flex items-center gap-2.5 sm:gap-3">
-          <MagneticButton
+        {/* Direita: Botão Pílula Dourado + Menu Mobile */}
+        <div className="flex items-center gap-2.5">
+          <PillCTA
             id="cta-navbar"
             ctaOrigin="navbar"
             href={whatsappHref}
-            variant="outline-gold"
-            className="hidden px-5 py-2.5 text-sm sm:inline-flex"
+            size="sm"
+            className="hidden sm:inline-flex"
           >
-            <WhatsAppIcon className="h-4 w-4 shrink-0" />
-            <span>Falar no WhatsApp</span>
-          </MagneticButton>
+            Falar no WhatsApp
+          </PillCTA>
 
-          {/* Botão WhatsApp sempre visível no mobile */}
-          <a
+          <PillCTA
             id="cta-navbar-mobile"
-            data-cta-origin="navbar-mobile"
+            ctaOrigin="navbar-mobile"
             href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-full border border-gold/75 bg-gold/10 px-3.5 py-2 text-xs font-semibold text-gold transition-colors hover:bg-gold hover:text-navy sm:hidden"
+            size="sm"
+            className="sm:hidden"
           >
-            <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
-            <span>WhatsApp</span>
-          </a>
+            WhatsApp
+          </PillCTA>
 
           <button
             type="button"
             onClick={() => setMenuOpen((prev) => !prev)}
             aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
             aria-expanded={menuOpen}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-gold/25 text-paper transition-colors hover:border-gold hover:text-gold lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-white transition-colors hover:border-gold/60 hover:text-gold lg:hidden"
           >
             {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
 
-      {/* Menu Drawer Mobile */}
+      {/* Menu Mobile Limpo */}
       <div
-        className={`overflow-hidden border-t border-gold/15 bg-navy/95 backdrop-blur-lg transition-all duration-300 lg:hidden ${
-          menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
+        className={`overflow-hidden transition-all duration-300 lg:hidden ${
+          menuOpen ? 'mt-4 max-h-80 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
         }`}
       >
-        <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-5 sm:px-6">
-          <div className="mb-3 border-b border-white/10 pb-3 sm:hidden">
-            <p className="text-sm font-semibold text-paper">
-              {siteConfig.brand.fullName}
-            </p>
-            <p className="text-xs text-paper/65">
-              {siteConfig.brand.subtitle} • {siteConfig.brand.oab}
-            </p>
-          </div>
+        <nav
+          aria-label="Navegação mobile"
+          className="flex flex-col gap-1 rounded-2xl border border-white/10 bg-navy-deep/90 p-3 backdrop-blur-xl"
+        >
           {siteConfig.navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="rounded-xl px-3 py-3 text-base font-medium text-paper/85 transition-colors hover:bg-navy-light hover:text-gold"
+              className="rounded-xl px-4 py-3 text-sm font-medium text-slate-200 transition-colors hover:bg-white/[0.07] hover:text-gold"
             >
               {link.label}
             </a>
           ))}
-        </div>
+        </nav>
       </div>
     </header>
   );
