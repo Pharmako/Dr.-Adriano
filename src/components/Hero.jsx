@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MapPin, Scale, ShieldCheck, UserCheck } from 'lucide-react';
 import { siteConfig, getWhatsAppUrl } from '../config/siteConfig';
 import Navbar from './Navbar';
 import GreekColumnIcon from './GreekColumnIcon';
 import PillCTA from './PillCTA';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const authorityIcons = {
   Scale,
@@ -15,6 +18,7 @@ const authorityIcons = {
 
 export default function Hero() {
   const sectionRef = useRef(null);
+  const portraitImgRef = useRef(null);
   const [imgError, setImgError] = useState(false);
 
   useEffect(() => {
@@ -24,32 +28,92 @@ export default function Hero() {
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+      // 1. Navbar interna: entra suave de y: -14, opacity: 0
+      tl.fromTo(
+        '.hero-navbar',
+        { opacity: 0, y: -14 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.65,
+          clearProps: 'transform,opacity',
+        },
+        0
+      );
+
+      // 2. Badge + H1 + micro-texto escalonados (stagger: 0.1, y: 26 -> 0)
+      tl.fromTo(
         '.hero-reveal',
-        { opacity: 0, y: 20 },
+        { opacity: 0, y: 26 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          clearProps: 'transform,opacity',
+        },
+        0.1
+      );
+
+      // 3. Retrato em arco: respiro cinematográfico (scale: 1.05 -> 1, opacity: 0 -> 1, duration: 1.0)
+      tl.fromTo(
+        '.hero-portrait',
+        { opacity: 0, scale: 1.05 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1.0,
+          clearProps: 'transform,opacity',
+        },
+        0.12
+      );
+
+      // 4. Card Glassmorphism + Botão CTA deslizam juntos (y: 22 -> 0)
+      tl.fromTo(
+        '.hero-right-block',
+        { opacity: 0, y: 22 },
         {
           opacity: 1,
           y: 0,
           duration: 0.75,
-          stagger: 0.09,
-          ease: 'power3.out',
           clearProps: 'transform,opacity',
-        }
+        },
+        0.28
       );
 
-      gsap.fromTo(
-        '.hero-portrait',
-        { opacity: 0, y: 26, scale: 0.97 },
+      // 5. Barra Inferior de Autoridade (4 itens, stagger: 0.08, y: 16 -> 0)
+      tl.fromTo(
+        '.hero-authority-item',
+        { opacity: 0, y: 16 },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 0.9,
-          delay: 0.12,
-          ease: 'power3.out',
+          duration: 0.65,
+          stagger: 0.08,
           clearProps: 'transform,opacity',
-        }
+        },
+        0.42
       );
+
+      // Micro-parallax no Scroll na imagem dentro do arco (yPercent: 6, scrub: true)
+      if (portraitImgRef.current) {
+        gsap.fromTo(
+          portraitImgRef.current,
+          { yPercent: 0 },
+          {
+            yPercent: 6,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: true,
+            },
+          }
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -103,6 +167,7 @@ export default function Hero() {
                 ctaOrigin="hero-mobile"
                 href={heroWhatsAppUrl}
                 fullWidth
+                pulse
               >
                 {siteConfig.hero.ctaLabel}
               </PillCTA>
@@ -129,12 +194,13 @@ export default function Hero() {
             <div className="hero-portrait relative z-10 aspect-[4/5] w-full max-w-[330px] overflow-hidden rounded-b-2xl rounded-t-[130px] border border-[#D4AF5A]/25 bg-navy-deep shadow-2xl sm:max-w-[360px] lg:max-w-none">
               {!imgError ? (
                 <img
+                  ref={portraitImgRef}
                   src={siteConfig.hero.photoPath}
                   alt={siteConfig.hero.photoAlt}
                   onError={() => setImgError(true)}
                   loading="eager"
                   decoding="async"
-                  className="h-full w-full object-cover object-top"
+                  className="h-full w-full object-cover object-top will-change-transform"
                 />
               ) : (
                 <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-b from-navy-light to-navy-deep p-8 text-center">
@@ -154,9 +220,9 @@ export default function Hero() {
           </div>
 
           {/* Coluna Direita (3 cols): Card Glassmorphism + CTA Principal */}
-          <div className="hero-reveal flex flex-col gap-4 pb-8 lg:col-span-3 lg:pb-12">
-            <div className="space-y-3 rounded-2xl border border-white/15 bg-white/[0.07] p-5 backdrop-blur-xl">
-              <div className="flex items-center gap-2.5">
+          <div className="hero-right-block flex flex-col gap-4 pb-8 lg:col-span-3 lg:pb-12">
+            <div className="glass-card-sheen space-y-3 rounded-2xl border border-white/15 bg-white/[0.07] p-5 backdrop-blur-xl">
+              <div className="relative z-10 flex items-center gap-2.5">
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold/15 text-gold">
                   <Scale className="h-4 w-4" />
                 </span>
@@ -164,7 +230,7 @@ export default function Hero() {
                   {siteConfig.hero.glassTitle}
                 </span>
               </div>
-              <p className="text-sm leading-relaxed text-slate-200">
+              <p className="relative z-10 text-sm leading-relaxed text-slate-200">
                 {siteConfig.hero.glassText}
               </p>
             </div>
@@ -175,6 +241,7 @@ export default function Hero() {
                 ctaOrigin="hero"
                 href={heroWhatsAppUrl}
                 fullWidth
+                pulse
               >
                 {siteConfig.hero.ctaLabel}
               </PillCTA>
@@ -189,7 +256,10 @@ export default function Hero() {
           {siteConfig.authorityBar.map((item) => {
             const Icon = authorityIcons[item.icon] || Scale;
             return (
-              <div key={item.id} className="flex items-start gap-3">
+              <div
+                key={item.id}
+                className="hero-authority-item flex items-start gap-3"
+              >
                 <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-gold/20 bg-gold/10 text-gold">
                   <Icon className="h-4 w-4" />
                 </span>

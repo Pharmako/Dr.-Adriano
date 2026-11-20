@@ -21,10 +21,10 @@ export default function FloatingWhatsApp() {
         aria-label="Falar com o Dr. Adriano no WhatsApp"
         className="relative flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp text-white shadow-xl shadow-black/25 transition-transform duration-300 hover:scale-105 hover:bg-whatsapp-hover focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-paper"
       >
-        {/* Anel de pulso sutil */}
+        {/* Anel expansivo orgânico controlado (0.45 -> 0 em 2.4s) */}
         <span
           aria-hidden="true"
-          className="absolute inset-0 rounded-full bg-whatsapp opacity-35 animate-ping [animation-duration:2.8s]"
+          className="whatsapp-pulse-ring pointer-events-none absolute inset-0 rounded-full bg-whatsapp"
         />
         <WhatsAppIcon className="relative z-10 h-7 w-7" />
       </a>

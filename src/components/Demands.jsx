@@ -17,19 +17,38 @@ export default function Demands() {
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
+      // Cabeçalho entra primeiro (y: 24 -> 0)
       gsap.fromTo(
-        '.demand-row',
-        { opacity: 0, y: 16 },
+        '.demands-header',
+        { opacity: 0, y: 24 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.55,
-          stagger: 0.06,
+          duration: 0.75,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        }
+      );
+
+      // 6 linhas da tabela entram em sequência fluida (x: -18 -> 0, stagger: 0.07)
+      gsap.fromTo(
+        '.demand-row',
+        { opacity: 0, x: -18 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.6,
+          stagger: 0.07,
           ease: 'power2.out',
           clearProps: 'transform,opacity',
           scrollTrigger: {
             trigger: '.demands-list',
-            start: 'top 84%',
+            start: 'top 85%',
             once: true,
           },
         }
@@ -47,7 +66,7 @@ export default function Demands() {
       aria-labelledby="demandas-heading"
     >
       {/* Cabeçalho */}
-      <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+      <div className="demands-header flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
         <div className="max-w-2xl">
           <span className="inline-flex items-center rounded-full border border-neutral-300 bg-white/70 px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-600">
             COMO POSSO AJUDAR
@@ -94,16 +113,16 @@ export default function Demands() {
               href={getWhatsAppUrl(item.whatsappMessage)}
               target="_blank"
               rel="noopener noreferrer"
-              className="demand-row group -mx-4 flex flex-col items-start gap-3 rounded-xl border-b border-neutral-300/80 px-4 py-5 transition-all duration-200 hover:bg-white hover:shadow-sm md:grid md:grid-cols-12 md:items-center md:gap-2"
+              className="demand-row group -mx-4 flex flex-col items-start gap-3 rounded-xl border-b border-neutral-300/80 px-4 py-5 transition-all duration-300 hover:bg-white hover:shadow-sm md:grid md:grid-cols-12 md:items-center md:gap-2"
             >
               <div className="w-full md:col-span-6">
-                <span className="font-serif text-lg font-semibold text-[#0D1B2A] transition-colors group-hover:text-navy-light sm:text-xl">
+                <span className="inline-block font-serif text-lg font-semibold text-[#0D1B2A] transition-transform duration-300 group-hover:translate-x-1 sm:text-xl">
                   {item.title}
                 </span>
               </div>
 
               <div className="flex flex-wrap items-center gap-3 md:col-span-3">
-                <span className="inline-flex items-center rounded-full border border-neutral-300 bg-[#F4F3EF] px-3 py-1 text-xs font-semibold text-[#0D1B2A] transition-colors group-hover:border-gold/60 group-hover:bg-gold/15">
+                <span className="inline-flex items-center rounded-full border border-neutral-300 bg-[#F4F3EF] px-3 py-1 text-xs font-semibold text-[#0D1B2A] transition-colors duration-300 group-hover:border-gold/70 group-hover:bg-gold/20">
                   {item.area}
                 </span>
                 <span className="text-xs font-medium text-neutral-500 md:hidden">
@@ -120,7 +139,7 @@ export default function Demands() {
                   aria-hidden="true"
                   className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-300 bg-white text-[#0D1B2A] transition-all duration-300 group-hover:border-[#0D1B2A] group-hover:bg-[#0D1B2A] group-hover:text-gold"
                 >
-                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
+                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </div>
             </a>

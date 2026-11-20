@@ -4,8 +4,8 @@ import { ArrowUpRight } from 'lucide-react';
 /**
  * Botão CTA Padrão Pílula Premium:
  * rounded-full em #D4AF5A (hover #E2C170), texto #0D1B2A semibold,
- * micro-interação magnética com camada deslizante e círculo branco à direita
- * contendo ArrowUpRight com rotação suave no hover.
+ * reflexo de vidro (btn-gold-shimmer), pulso opcional exclusivo da Hero (btn-gold-pulse)
+ * e círculo branco à direita contendo ArrowUpRight com micro-deslocamento diagonal.
  */
 export default function PillCTA({
   id,
@@ -13,6 +13,7 @@ export default function PillCTA({
   href,
   children,
   fullWidth = false,
+  pulse = false,
   size = 'md',
   className = '',
 }) {
@@ -30,9 +31,9 @@ export default function PillCTA({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`magnetic-pill group inline-flex items-center justify-between rounded-full bg-gold font-semibold text-navy shadow-gold-glow ${
-        fullWidth ? 'w-full' : 'w-auto'
-      } ${sizeClasses} ${className}`}
+      className={`btn-gold-shimmer group inline-flex items-center justify-between rounded-full bg-gold font-semibold text-navy shadow-gold-glow ${
+        pulse ? 'btn-gold-pulse' : ''
+      } ${fullWidth ? 'w-full' : 'w-auto'} ${sizeClasses} ${className}`}
     >
       <span className="magnetic-pill-fill bg-gold-hover" aria-hidden="true" />
       <span className="relative z-10 whitespace-nowrap">{children}</span>
@@ -40,7 +41,7 @@ export default function PillCTA({
         className={`relative z-10 flex shrink-0 items-center justify-center rounded-full bg-white text-navy shadow-sm transition-transform duration-300 group-hover:scale-105 ${circleClasses}`}
         aria-hidden="true"
       >
-        <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
+        <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </span>
     </a>
   );

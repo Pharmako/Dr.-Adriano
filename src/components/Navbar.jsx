@@ -19,7 +19,7 @@ export default function Navbar() {
   const whatsappHref = getWhatsAppUrl(siteConfig.defaultWhatsAppMessages.navbar);
 
   return (
-    <header className="relative z-30 mx-auto w-full max-w-7xl px-5 pt-5 sm:px-6 sm:pt-6 lg:px-12">
+    <header className="hero-navbar relative z-30 mx-auto w-full max-w-7xl px-5 pt-5 sm:px-6 sm:pt-6 lg:px-12">
       <div className="flex items-center justify-between gap-4">
         {/* Esquerda: Coluna Clássica + ASP + Adriano Souza Pereira */}
         <a

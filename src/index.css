@@ -40,23 +40,73 @@
   background-size: 220px 220px;
 }
 
-/* Micro-interação magnética com camada deslizante (gemini.md) */
-.magnetic-pill {
+/* ============================================================================
+   1. EFEITO REFLEXO DE VIDRO NOS BOTÕES DOURADOS (btn-gold-shimmer)
+   ============================================================================ */
+@keyframes goldShimmerIdle {
+  0% {
+    transform: translateX(-140%) skewX(-20deg);
+  }
+  20% {
+    transform: translateX(260%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(260%) skewX(-20deg);
+  }
+}
+
+@keyframes goldShimmerHover {
+  0% {
+    transform: translateX(-140%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(260%) skewX(-20deg);
+  }
+}
+
+.btn-gold-shimmer {
   position: relative;
   overflow: hidden;
   transition:
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.3s ease;
 }
 
-.magnetic-pill:hover {
-  transform: translateY(-1px) scale(1.02);
+.btn-gold-shimmer::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 0;
+  width: 55%;
+  height: 120%;
+  pointer-events: none;
+  z-index: 20;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.55) 48%,
+    rgba(255, 255, 255, 0.15) 55%,
+    transparent 80%
+  );
+  transform: translateX(-140%) skewX(-20deg);
+  animation: goldShimmerIdle 4.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
-.magnetic-pill:active {
+.btn-gold-shimmer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -6px rgba(212, 175, 90, 0.45);
+}
+
+.btn-gold-shimmer:hover::before {
+  animation: goldShimmerHover 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.btn-gold-shimmer:active {
   transform: translateY(0) scale(0.99);
 }
 
+/* Camada deslizante de preenchimento nos botões pílula */
 .magnetic-pill-fill {
   position: absolute;
   inset: 0;
@@ -65,8 +115,92 @@
   z-index: 0;
 }
 
-.magnetic-pill:hover .magnetic-pill-fill {
+.btn-gold-shimmer:hover .magnetic-pill-fill {
   transform: translateY(0);
+}
+
+/* ============================================================================
+   2. AURA PULSANTE DOURADA EXCLUSIVA DO CTA PRINCIPAL DA HERO (btn-gold-pulse)
+   ============================================================================ */
+@keyframes goldPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 90, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(212, 175, 90, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 90, 0);
+  }
+}
+
+.btn-gold-pulse {
+  animation: goldPulse 2.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.btn-gold-pulse:hover {
+  animation-play-state: paused;
+}
+
+/* ============================================================================
+   3. REFLEXO DE VIDRO EM CARDS ESCUROS (glass-card-sheen)
+   ============================================================================ */
+.glass-card-sheen {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    background-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.glass-card-sheen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    120deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 75%
+  );
+  transform: translateX(-130%) skewX(-18deg);
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.glass-card-sheen:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212, 175, 90, 0.65);
+  box-shadow: 0 18px 40px -16px rgba(4, 10, 18, 0.6);
+}
+
+.glass-card-sheen:hover::before {
+  transform: translateX(130%) skewX(-18deg);
+}
+
+/* ============================================================================
+   4. PULSO ORGÂNICO NO BOTÃO FLUTUANTE WHATSAPP
+   ============================================================================ */
+@keyframes whatsappPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  75% {
+    transform: scale(1.42);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.42);
+    opacity: 0;
+  }
+}
+
+.whatsapp-pulse-ring {
+  animation: whatsappPulse 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 /* Ocultar scrollbar no carrossel horizontal mantendo acessibilidade */
@@ -84,12 +218,19 @@
     scroll-behavior: auto;
   }
 
-  .magnetic-pill,
-  .magnetic-pill-fill {
-    transition: none;
+  .btn-gold-shimmer,
+  .btn-gold-shimmer::before,
+  .btn-gold-pulse,
+  .magnetic-pill-fill,
+  .glass-card-sheen,
+  .glass-card-sheen::before,
+  .whatsapp-pulse-ring {
+    animation: none !important;
+    transition: none !important;
   }
 
-  .magnetic-pill:hover {
-    transform: none;
+  .btn-gold-shimmer:hover,
+  .glass-card-sheen:hover {
+    transform: none !important;
   }
 }

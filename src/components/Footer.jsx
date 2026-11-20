@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   ArrowUpRight,
   Building2,
@@ -11,6 +13,8 @@ import {
 import { siteConfig, getWhatsAppUrl } from '../config/siteConfig';
 import GreekColumnIcon from './GreekColumnIcon';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const painIcons = {
   Building2,
   Users,
@@ -18,9 +22,78 @@ const painIcons = {
 };
 
 export default function Footer() {
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    const prefersReduced = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+      // Container escuro sobe suavemente (y: 24 -> 0)
+      gsap.fromTo(
+        footerRef.current,
+        { opacity: 0.94, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.75,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        }
+      );
+
+      // 3 cards do Seletor de Dores entram em cascata (y: 28 -> 0, stagger: 0.1)
+      gsap.fromTo(
+        '.footer-pain-card',
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.75,
+          stagger: 0.1,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: {
+            trigger: '.footer-pain-grid',
+            start: 'top 85%',
+            once: true,
+          },
+        }
+      );
+
+      // Bloco inferior (logo, endereço e mapa) entra em fade-in limpo
+      gsap.fromTo(
+        '.footer-bottom-block',
+        { opacity: 0, y: 16 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power2.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: {
+            trigger: '.footer-bottom-block',
+            start: 'top 90%',
+            once: true,
+          },
+        }
+      );
+    }, footerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <footer
       id="contato"
+      ref={footerRef}
       className="sculpted-dark mx-2.5 mb-5 mt-4 rounded-[24px] text-white shadow-sculpted ring-1 ring-white/10 sm:mx-5 sm:mb-8 sm:rounded-[28px] lg:mx-8 lg:rounded-[36px]"
       aria-labelledby="footer-heading"
     >
@@ -42,7 +115,7 @@ export default function Footer() {
           </h2>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="footer-pain-grid mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
           {siteConfig.footerPainPoints.map((item) => {
             const Icon = painIcons[item.icon] || Scale;
             return (
@@ -53,15 +126,15 @@ export default function Footer() {
                 href={getWhatsAppUrl(item.whatsappMessage)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex min-h-[150px] flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.05] p-6 transition-all duration-300 hover:border-[#D4AF5A]/70 hover:bg-white/[0.1]"
+                className="footer-pain-card glass-card-sheen group flex min-h-[150px] flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.05] p-6 hover:bg-white/[0.1]"
               >
-                <div className="flex items-center justify-between">
+                <div className="relative z-10 flex items-center justify-between">
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-gold/25 bg-gold/10 text-gold transition-colors duration-300 group-hover:bg-gold group-hover:text-navy">
                     <Icon className="h-5 w-5" />
                   </span>
                 </div>
 
-                <div className="mt-5 flex items-end justify-between gap-4">
+                <div className="relative z-10 mt-5 flex items-end justify-between gap-4">
                   <span className="font-serif text-lg font-semibold leading-snug text-white transition-colors group-hover:text-gold sm:text-xl">
                     {item.title}
                   </span>
@@ -69,7 +142,7 @@ export default function Footer() {
                     aria-hidden="true"
                     className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-gold transition-all duration-300 group-hover:border-gold group-hover:bg-gold group-hover:text-navy"
                   >
-                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
+                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </span>
                 </div>
               </a>
@@ -78,7 +151,7 @@ export default function Footer() {
         </div>
 
         {/* CAMADA INFERIOR: Dados Oficiais + Mini Card de Localização Interativo */}
-        <div className="mt-12 grid grid-cols-1 items-center gap-8 border-t border-white/10 pt-10 lg:grid-cols-12">
+        <div className="footer-bottom-block mt-12 grid grid-cols-1 items-center gap-8 border-t border-white/10 pt-10 lg:grid-cols-12">
           {/* Cols 1–4: Marca */}
           <div className="lg:col-span-4">
             <div className="flex items-start gap-3.5">

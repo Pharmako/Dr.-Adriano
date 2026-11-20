@@ -1,4 +1,5 @@
 import React from 'react';
+import ScrollProgressBar from './components/ScrollProgressBar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Specialties from './components/Specialties';
@@ -9,6 +10,7 @@ import FloatingWhatsApp from './components/FloatingWhatsApp';
 export default function App() {
   return (
     <div className="min-h-screen bg-paper text-ink">
+      <ScrollProgressBar />
       <main>
         <Hero />
         <About />

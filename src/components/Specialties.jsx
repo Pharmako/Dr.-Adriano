@@ -1,14 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { siteConfig, getWhatsAppUrl } from '../config/siteConfig';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Specialties() {
   const sectionRef = useRef(null);
-  const trackRef = useRef(null);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia(
@@ -17,19 +16,39 @@ export default function Specialties() {
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
+      // Container escuro esculpido: entrada sutil de escala e elevação
+      gsap.fromTo(
+        sectionRef.current,
+        { opacity: 0.92, scale: 0.985, y: 24 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.75,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 85%',
+            once: true,
+          },
+        }
+      );
+
+      // 4 cards fotográficos entram em cascata (y: 36 -> 0, stagger: 0.1)
       gsap.fromTo(
         '.specialty-card',
-        { opacity: 0, y: 26 },
+        { opacity: 0, y: 36 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.75,
+          duration: 0.8,
           stagger: 0.1,
-          ease: 'power2.out',
+          ease: 'power3.out',
           clearProps: 'transform,opacity',
           scrollTrigger: {
-            trigger: trackRef.current,
-            start: 'top 84%',
+            trigger: '.specialties-grid',
+            start: 'top 85%',
             once: true,
           },
         }
@@ -38,15 +57,6 @@ export default function Specialties() {
 
     return () => ctx.revert();
   }, []);
-
-  const scrollTrack = (direction) => {
-    if (!trackRef.current) return;
-    const scrollAmount = Math.max(320, trackRef.current.clientWidth * 0.75);
-    trackRef.current.scrollBy({
-      left: direction === 'next' ? scrollAmount : -scrollAmount,
-      behavior: 'smooth',
-    });
-  };
 
   return (
     <section
@@ -75,37 +85,14 @@ export default function Specialties() {
             </h2>
           </div>
 
-          <div className="flex flex-col items-start gap-4 md:items-end">
-            <p className="max-w-xs text-sm leading-relaxed text-slate-300/80 md:text-right">
-              Escolha a frente que corresponde ao seu momento e converse
-              diretamente pelo WhatsApp.
-            </p>
-            <div className="flex items-center gap-2.5">
-              <button
-                type="button"
-                onClick={() => scrollTrack('prev')}
-                aria-label="Ver especialidade anterior"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-white transition-all duration-200 hover:border-gold hover:bg-gold hover:text-navy"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollTrack('next')}
-                aria-label="Ver próxima especialidade"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white text-navy transition-all duration-200 hover:border-gold hover:bg-gold"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
+          <p className="max-w-xs text-sm leading-relaxed text-slate-300/80 md:text-right">
+            Escolha a frente que corresponde ao seu momento e converse
+            diretamente pelo WhatsApp.
+          </p>
         </div>
 
-        {/* Vitrine de 4 Cards Fotográficos Altos (Ritmo Claro / Full-Bleed Escuro) */}
-        <div
-          ref={trackRef}
-          className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 xl:grid xl:grid-cols-4 xl:overflow-visible"
-        >
+        {/* Grid Fixo Responsivo de 4 Cards Fotográficos Altos */}
+        <div className="specialties-grid grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {siteConfig.specialties.map((card) => {
             const href = getWhatsAppUrl(card.whatsappMessage);
 
@@ -118,7 +105,7 @@ export default function Specialties() {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="specialty-card group relative flex min-h-[430px] w-[82vw] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-2xl border border-white/15 bg-navy-deep p-6 transition-all duration-300 hover:border-gold/60 sm:w-[340px] xl:w-auto"
+                  className="specialty-card group relative flex min-h-[430px] flex-col justify-between overflow-hidden rounded-2xl border border-white/15 bg-navy-deep p-6 transition-all duration-300 hover:-translate-y-1 hover:border-gold/65"
                 >
                   {/* Imagem Full-Bleed */}
                   <img
@@ -156,7 +143,7 @@ export default function Specialties() {
                       </span>
                       <span
                         aria-hidden="true"
-                        className="flex h-10 w-10 items-center justify-center rounded-full bg-gold text-navy shadow-md transition-transform duration-300 group-hover:scale-105"
+                        className="flex h-10 w-10 items-center justify-center rounded-full bg-gold text-navy shadow-md transition-all duration-300 group-hover:scale-105 group-hover:bg-gold-hover group-hover:shadow-[0_0_20px_rgba(212,175,90,0.6)]"
                       >
                         <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
                       </span>
@@ -175,7 +162,7 @@ export default function Specialties() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="specialty-card group flex min-h-[430px] w-[82vw] shrink-0 snap-start flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-[#F7F6F2] p-6 text-[#0D1B2A] transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:w-[340px] xl:w-auto"
+                className="specialty-card group flex min-h-[430px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-[#F7F6F2] p-6 text-[#0D1B2A] transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
               >
                 <div>
                   <span className="inline-flex items-center rounded-full border border-neutral-300 bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-600">
@@ -204,7 +191,7 @@ export default function Specialties() {
 
                   <span
                     aria-hidden="true"
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-300 bg-white text-[#0D1B2A] transition-all duration-300 group-hover:border-[#0D1B2A] group-hover:bg-[#0D1B2A] group-hover:text-gold"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-300 bg-white text-[#0D1B2A] transition-all duration-300 group-hover:border-gold group-hover:bg-[#0D1B2A] group-hover:text-gold group-hover:shadow-[0_0_18px_rgba(212,175,90,0.45)]"
                   >
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:rotate-45" />
                   </span>
