@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#0F1D2B"/>
+  <rect x="3" y="3" width="58" height="58" rx="11" stroke="#C8A253" stroke-opacity="0.45" stroke-width="1.5"/>
+  <text x="32" y="39" text-anchor="middle" fill="#C8A253" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" letter-spacing="1.5">ASP</text>
+  <line x1="16" y1="47" x2="48" y2="47" stroke="#C8A253" stroke-opacity="0.7" stroke-width="1.5"/>
+</svg>
